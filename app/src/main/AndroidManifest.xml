@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nosleep.viewfinder.viewfinder">
 
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/search_icon"
@@ -15,10 +18,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".Feed"
-            android:exported="true"
-            android:label="View Finder" >
         </activity>
         <activity
             android:name=".LocationDetails"
