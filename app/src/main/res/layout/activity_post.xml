@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,11 +20,10 @@
         android:id="@+id/view3"
         android:layout_width="wrap_content"
         android:layout_height="2dp"
-        android:layout_marginBottom="16dp"
         android:background="@color/colorDivider"
-        app:layout_constraintBottom_toTopOf="@+id/mvMap"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rbRating" />
 
     <Button
         android:id="@+id/btnClose"
@@ -104,7 +103,6 @@
         android:rating="3"
         android:scaleX="0.5"
         android:scaleY="0.5"
-        app:layout_constraintBottom_toTopOf="@+id/view3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
@@ -112,12 +110,14 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/mvMap"
         android:layout_width="299dp"
-        android:layout_height="134dp"
+        android:layout_height="185dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnPost"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
 
     <Button
         android:id="@+id/btnPost"
@@ -125,7 +125,7 @@
         android:layout_height="55dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:text="Post"
         android:textColor="@color/colorButtonText"
         android:textSize="18sp"
@@ -134,4 +134,4 @@
         app:layout_constraintStart_toStartOf="parent" /><![CDATA[
     />
 ]]>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
