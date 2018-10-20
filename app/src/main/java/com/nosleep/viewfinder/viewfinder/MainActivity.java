@@ -19,6 +19,7 @@ import com.nosleep.viewfinder.util.FirebaseManager;
 public class MainActivity extends AppCompatActivity {
 
     Button btnCallImage;
+    Button btnActionPost;
     ImageView ivPostImage;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_post:
-                // User chose the "Settings" item, show the app settings UI...
+                dispatchTakePictureIntent();
                 return true;
 
             default:
