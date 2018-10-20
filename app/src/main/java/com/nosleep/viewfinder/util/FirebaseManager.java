@@ -11,12 +11,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.nosleep.viewfinder.dbobject.ImageData;
 import com.nosleep.viewfinder.dbobject.DBImage;
 
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 
@@ -25,8 +22,9 @@ public class FirebaseManager {
     public static String pushToImageContent(ImageData data) {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference content = db.getReference("Metadata");
-        content.push().setValue(data);
-        String pushId = content.getKey();
+        content.setValue(data);
+        //TODO: pushId defualts to metadata, probably push than add with key
+        String pushId = content.push().getKey();
         return pushId;
     }
 
