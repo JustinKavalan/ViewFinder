@@ -12,9 +12,15 @@ public class ImageProcessing {
 
     public static String convertBitmapToString(Bitmap input) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        input.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        String result =  Base64.encodeToString(baos.toByteArray(), Base64.URL_SAFE);
-        Log.d("RESULT", "" + result.length());
+
+        String result;
+        int quality = 100;
+
+        do {
+            input.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+            result = Base64.encodeToString(baos.toByteArray(), Base64.URL_SAFE);
+            quality -= 10;
+        } while (result.length() >= 10000000);
 
         return result;
     }
