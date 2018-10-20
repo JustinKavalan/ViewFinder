@@ -43,6 +43,10 @@ public class FirebaseManager {
         pushToImageContent(img.getImage(), pushId);
     }
 
+    public static void uploadImageToCloud(Bitmap image, String directory) {
+        // Stub
+    }
+
     public static void getClosestImages(final CloseImageCallback callback, final double latitude,
                                         final double longitude, final int numOfImg,
                                         final boolean isForFeed) {
