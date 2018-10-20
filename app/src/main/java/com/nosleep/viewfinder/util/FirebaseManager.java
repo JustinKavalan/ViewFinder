@@ -23,9 +23,8 @@ public class FirebaseManager {
     public static String pushToImageData(ImageData data) {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference content = db.getReference("Metadata");
-        content.push().setValue(data);
-        //TODO: pushId defualts to metadata, probably push than add with key
         String pushId = content.push().getKey();
+        content.child(pushId).setValue(data);
         return pushId;
     }
 

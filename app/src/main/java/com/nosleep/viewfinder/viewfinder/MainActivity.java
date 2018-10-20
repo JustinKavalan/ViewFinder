@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ImageData imd = new ImageData();
-        FirebaseManager.pushToImageContent(imd);
+        FirebaseManager.pushToImageData(imd);
         FirebaseManager.getClosestImages(0, 0,4);
         setContentView(R.layout.activity_main);
 
@@ -38,8 +38,6 @@ public class MainActivity extends Activity {
         DBImage test1 = new DBImage(new ImageData(), result);
         FirebaseManager.pushImage(test1);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.vp_location_images);
-        viewPager.setAdapter(new CustomPageAdapter(this));
 
     }
 
