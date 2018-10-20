@@ -1,29 +1,18 @@
 package com.nosleep.viewfinder.viewfinder;
 
-import android.app.Activity;
-import android.content.Intent;
-import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import com.google.firebase.database.FirebaseDatabase;
-import com.nosleep.viewfinder.dbobject.DBImage;
-import com.nosleep.viewfinder.dbobject.ImageData;
 import com.nosleep.viewfinder.util.FirebaseManager;
-import java.io.ByteArrayOutputStream;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     Button btnCallImage;
     ImageView ivPostImage;
