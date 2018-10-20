@@ -14,7 +14,7 @@
         android:background="@color/colorDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/ivPostPreview" />
 
     <View
         android:id="@+id/view3"
@@ -22,12 +22,12 @@
         android:layout_height="2dp"
         android:layout_marginBottom="16dp"
         android:background="@color/colorDivider"
-        app:layout_constraintBottom_toTopOf="@+id/mapView"
+        app:layout_constraintBottom_toTopOf="@+id/mvMap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnClose"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="#FFFFFF"
@@ -37,7 +37,7 @@
         android:textSize="30sp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
@@ -50,7 +50,7 @@
         android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/btnClose"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
@@ -62,10 +62,10 @@
         android:background="@color/colorDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btnClose" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivPostPreview"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="8dp"
@@ -75,10 +75,11 @@
         app:srcCompat="@drawable/manhattan" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/etCaption"
         android:layout_width="199dp"
         android:layout_height="139dp"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@null"
         android:ems="10"
         android:gravity="top"
@@ -88,11 +89,12 @@
         android:paddingTop="10dp"
         android:textAlignment="viewStart"
         app:layout_constraintBottom_toTopOf="@+id/view2"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivPostPreview"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/rbRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -108,17 +110,17 @@
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
+        android:id="@+id/mvMap"
         android:layout_width="299dp"
         android:layout_height="134dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/btnPost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnPost"
         android:layout_width="104dp"
         android:layout_height="55dp"
         android:layout_marginStart="8dp"
