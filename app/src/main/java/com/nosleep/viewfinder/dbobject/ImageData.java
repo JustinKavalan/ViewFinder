@@ -1,4 +1,4 @@
-package com.nosleep.viewfinder.dbobject.;
+package com.nosleep.viewfinder.dbobject;
 
 import java.util.List;
 
