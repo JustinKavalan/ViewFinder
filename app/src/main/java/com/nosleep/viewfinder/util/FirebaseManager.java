@@ -5,9 +5,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class FirebaseManager {
 
-    private void pushToDb() {
+    public static void pushToDB() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = db.getReference("message");
-        myRef.setValue("Hello World!");
+        DatabaseReference content = db.getReference("Content");
+        DatabaseReference sampleContent = content.child("PlaceholderHash");
+        sampleContent.setValue("PlaceholderImage");
     }
+
+//    public static
 }
