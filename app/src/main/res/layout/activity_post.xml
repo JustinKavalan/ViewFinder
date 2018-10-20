@@ -10,17 +10,21 @@
         android:id="@+id/view2"
         android:layout_width="wrap_content"
         android:layout_height="2dp"
+        android:layout_marginTop="2dp"
         android:background="@color/colorDivider"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="222dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <View
         android:id="@+id/view3"
         android:layout_width="wrap_content"
         android:layout_height="2dp"
+        android:layout_marginBottom="16dp"
         android:background="@color/colorDivider"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="282dp" />
+        app:layout_constraintBottom_toTopOf="@+id/mapView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button"
@@ -37,36 +41,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="132dp"
+        android:layout_marginBottom="8dp"
         android:text="Create Post"
         android:textAlignment="center"
         android:textColor="@color/colorSecondaryText"
         android:textSize="23sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view"
-        android:layout_width="wrap_content"
-        android:layout_height="2dp"
+        android:layout_width="374dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/colorDivider"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="60dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        app:srcCompat="@drawable/manhattan"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="67dp" />
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:srcCompat="@drawable/manhattan" />
 
     <EditText
         android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
+        android:layout_width="199dp"
+        android:layout_height="139dp"
+        android:layout_marginStart="8dp"
         android:background="@null"
         android:ems="10"
         android:gravity="top"
@@ -75,37 +87,49 @@
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:textAlignment="viewStart"
-        tools:layout_editor_absoluteX="150dp"
-        tools:layout_editor_absoluteY="67dp" />
+        app:layout_constraintBottom_toTopOf="@+id/view2"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:numStars="5"
+        android:progressTint="@color/colorPrimary"
         android:rating="3"
         android:scaleX="0.5"
         android:scaleY="0.5"
-        android:progressTint="@color/colorPrimary"
-        tools:layout_editor_absoluteX="72dp"
-        tools:layout_editor_absoluteY="224dp" />
+        app:layout_constraintBottom_toTopOf="@+id/view3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="204dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="289dp" />
+        android:layout_width="299dp"
+        android:layout_height="134dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="104dp"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Post"
-        android:textSize="18sp"
         android:textColor="@color/colorButtonText"
-        tools:layout_editor_absoluteX="140dp"
-        tools:layout_editor_absoluteY="503dp" /><![CDATA[
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" /><![CDATA[
     />
 ]]>
 </android.support.constraint.ConstraintLayout>
