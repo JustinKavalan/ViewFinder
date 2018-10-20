@@ -5,15 +5,15 @@ import android.graphics.Bitmap;
 public class DBImage {
 
     private ImageData imageData;
-    private Bitmap image;
+    private String imageUrl;
 
-    public DBImage(ImageData imageData, Bitmap image) {
+    public DBImage(ImageData imageData, String imageUrl) {
         this.imageData = imageData;
-        this.image = image;
+        this.imageUrl = imageUrl;
     }
 
-    public Bitmap getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public ImageData getImageData() {

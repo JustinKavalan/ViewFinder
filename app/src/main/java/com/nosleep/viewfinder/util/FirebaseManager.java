@@ -28,19 +28,21 @@ public class FirebaseManager {
         return pushId;
     }
 
-    public static void pushToImageContent(Bitmap image, String pushId) {
+    public static void pushToImageUrlStore(String imageUrl, String pushId) {
         //TODO: Check for null
-        String imgStr = ImageProcessing.convertBitmapToString(image);
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference content = db.getReference("Image");
         DatabaseReference childContent = content.child(pushId);
-        childContent.setValue(imgStr);
+        childContent.setValue(imageUrl);
     }
 
-    public static void pushImage(DBImage img) {
+    public static void pushImage(ImageData imgData, Bitmap image) {
         //TODO: Check for null
-        String pushId = pushToImageData(img.getImageData());
-        pushToImageContent(img.getImage(), pushId);
+        String pushId = pushToImageData(imgData);
+        //TODO: IMPORTANT CHANGE URL TO REAL ONE
+        String url = "/Images/" + pushId;
+        pushToImageUrlStore(url, pushId);
+        uploadImageToCloud(image, url);
     }
 
     public static void uploadImageToCloud(Bitmap image, String directory) {
@@ -85,7 +87,7 @@ public class FirebaseManager {
                 }
                 List<ImageData> imgDataList = new ArrayList<>();
                 List<String> keyValues = new ArrayList<>();
-                List<Bitmap> images = new ArrayList<>();
+                List<String> images = new ArrayList<>();
                 List<DBImage> imageList = new ArrayList<>();
                 for (Map.Entry<String, ImageData> entry : imgDataListWithKey.entrySet()) {
                     imgDataList.add(entry.getValue());
@@ -93,9 +95,8 @@ public class FirebaseManager {
                 }
                 for (String key : keyValues) {
                     DataSnapshot image = dataSnapshot.child("Image").child(key);
-                    Bitmap bmap = ImageProcessing.convertStringToBitmap(
-                            image.getValue(String.class));
-                    images.add(bmap);
+                    String imageUrl = image.getValue(String.class);
+                    images.add(imageUrl);
                 }
                 for (int i = 0; i < keyValues.size(); i++) {
                     DBImage dbi = new DBImage(imgDataList.get(i), images.get(i));

@@ -29,13 +29,14 @@ public class LocationDetails extends Activity {
 
             @Override
             public void callback(List<DBImage> result) {
-                Bitmap[] images = new Bitmap[result.size()];
+                String[] images = new String[result.size()];
                 for (int i = 0; i < result.size(); i++) {
-                    images[i] = result.get(i).getImage();
+                    images[i] = result.get(i).getImageUrl();
                 }
 
                 Log.d("Backend Connection", "" + result.size());
 
+                //not sure how to fix this but you'll need to restructure
                 viewPager.setAdapter(new CustomPageAdapter(LocationDetails.this, images));
 
             }

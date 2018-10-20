@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
+import com.nosleep.viewfinder.dbobject.ImageData;
+
 public class Post extends AppCompatActivity {
 
     Button btnClose;
@@ -42,7 +44,15 @@ public class Post extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 caption = etCaption.getText().toString();
-                //Where the post is sent to firebase
+                ImageData imgData = new ImageData();
+                imgData.setCaption(caption);
+            }
+        });
+
+        btnClose.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
