@@ -1,10 +1,6 @@
 package com.nosleep.viewfinder.util;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.util.Base64;
-import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -13,9 +9,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nosleep.viewfinder.dbobject.ImageData;
 import com.nosleep.viewfinder.dbobject.DBImage;
-import com.nosleep.viewfinder.viewfinder.R;
+import com.nosleep.viewfinder.viewfinder.MainActivity;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,56 +43,42 @@ public class FirebaseManager {
         pushToImageContent(img.getImage(), pushId);
     }
 
-    private static Bitmap getImageByKey(final String key) {
+    public static void getClosestImages(final CloseImageCallback callback, final double latitude,
+                                        final double longitude, final int numOfImg,
+                                        final boolean isForFeed) {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference content = db.getReference("Image").child(key);
-        final Bitmap[] image = new Bitmap[1];
-        content.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                image[0] = ImageProcessing.convertStringToBitmap(dataSnapshot.getValue(
-                        String.class));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        return image[0];
-    }
-
-    public static void getClosestImages(final FirebaseCallback callback, final double latitude, final double longitude,
-                                                 final int numOfImg) {
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference content = db.getReference("Metadata");
+        DatabaseReference content = db.getReference();
         final HashMap<String, ImageData> imgDataListWithKey = new HashMap<>();
 
         content.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Map<String, Double> list = new HashMap<>();
-
-                for (DataSnapshot imgDataSnapshot : dataSnapshot.getChildren()) {
-                    ImageData imgData = imgDataSnapshot.getValue(ImageData.class);
-                    double imgLatitude = imgData.getLatitude();
-                    double imgLongitude = imgData.getLongitude();
-                    double distance = MathSupport.Haversine(latitude, longitude, imgLatitude,
-                            imgLongitude);
-                    if (list.size() < numOfImg) {
-                        list.put(imgDataSnapshot.getKey(), distance);
-                        imgDataListWithKey.put(imgDataSnapshot.getKey(), imgData);
-                    } else {
-                        String largestKeyValue = findLargestValueInMap(list);
-                        if (distance < list.get(largestKeyValue)) {
-                            list.remove(largestKeyValue);
-                            imgDataListWithKey.remove(largestKeyValue);
+                DataSnapshot metadata = dataSnapshot.child("Metadata");
+                for (DataSnapshot imgDataSnapshot : metadata.getChildren()) {
+                    if (!isForFeed
+                            || !MainActivity.ITEM_ID_ON_PAGE.contains(imgDataSnapshot.getKey())) {
+                        ImageData imgData = imgDataSnapshot.getValue(ImageData.class);
+                        double imgLatitude = imgData.getLatitude();
+                        double imgLongitude = imgData.getLongitude();
+                        double distance = MathSupport.Haversine(latitude, longitude, imgLatitude,
+                                imgLongitude);
+                        if (list.size() < numOfImg) {
                             list.put(imgDataSnapshot.getKey(), distance);
                             imgDataListWithKey.put(imgDataSnapshot.getKey(), imgData);
+                            MainActivity.ITEM_ID_ON_PAGE.add(imgDataSnapshot.getKey());
+                        } else {
+                            String largestKeyValue = findLargestValueInMap(list);
+                            if (distance < list.get(largestKeyValue)) {
+                                list.remove(largestKeyValue);
+                                imgDataListWithKey.remove(largestKeyValue);
+                                MainActivity.ITEM_ID_ON_PAGE.remove(largestKeyValue);
+                                list.put(imgDataSnapshot.getKey(), distance);
+                                imgDataListWithKey.put(imgDataSnapshot.getKey(), imgData);
+                            }
                         }
                     }
                 }
-
                 List<ImageData> imgDataList = new ArrayList<>();
                 List<String> keyValues = new ArrayList<>();
                 List<Bitmap> images = new ArrayList<>();
@@ -107,7 +88,10 @@ public class FirebaseManager {
                     keyValues.add(entry.getKey());
                 }
                 for (String key : keyValues) {
-                    images.add(getImageByKey(key));
+                    DataSnapshot image = dataSnapshot.child("Image").child(key);
+                    Bitmap bmap = ImageProcessing.convertStringToBitmap(
+                            image.getValue(String.class));
+                    images.add(bmap);
                 }
                 for (int i = 0; i < keyValues.size(); i++) {
                     DBImage dbi = new DBImage(imgDataList.get(i), images.get(i));

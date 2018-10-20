@@ -17,10 +17,15 @@ import com.nosleep.viewfinder.dbobject.DBImage;
 import com.nosleep.viewfinder.dbobject.ImageData;
 import com.nosleep.viewfinder.util.FirebaseManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     Button btnCallImage;
     ImageView ivPostImage;
+
+    public static List<String> ITEM_ID_ON_PAGE = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +37,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseManager.pushImage(output);
 
         btnCallImage = findViewById(R.id.btnCallImage);
-
-//        btnCallImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //put the firebase getter here
-//            }
-//        });
-
-
     }
 
     @Override

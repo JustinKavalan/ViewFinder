@@ -2,7 +2,6 @@ package com.nosleep.viewfinder.viewfinder;
 
 import android.app.Activity;
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.Bitmap;
@@ -10,9 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.nosleep.viewfinder.dbobject.DBImage;
-import com.nosleep.viewfinder.util.FirebaseCallback;
+import com.nosleep.viewfinder.util.CloseImageCallback;
 import com.nosleep.viewfinder.util.FirebaseManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocationDetails extends Activity {
@@ -24,7 +24,7 @@ public class LocationDetails extends Activity {
 
         final ViewPager mViewPager = findViewById(R.id.vp_location_images);
 
-        FirebaseCallback callback = new FirebaseCallback() {
+        CloseImageCallback callback = new CloseImageCallback() {
             ViewPager viewPager = mViewPager;
 
             @Override
@@ -40,7 +40,7 @@ public class LocationDetails extends Activity {
 
             }
         };
-        FirebaseManager.getClosestImages(callback,0.0,0.0,3);
+        FirebaseManager.getClosestImages(callback,0.0,0.0,3, true);
 
         // Get the intent that started this activity
         Intent intent = getIntent();
