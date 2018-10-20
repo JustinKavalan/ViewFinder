@@ -1,11 +1,11 @@
 package com.nosleep.viewfinder.viewfinder;
 
+import android.app.Activity;
 import android.content.Intent;
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class LocationDetails extends AppCompatActivity {
+public class LocationDetails extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
