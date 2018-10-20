@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_search:
+            case R.id.action_post:
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
 
