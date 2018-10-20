@@ -1,5 +1,6 @@
 package com.nosleep.viewfinder.dbobject;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 
 import java.util.Objects;
@@ -7,14 +8,14 @@ import java.util.Objects;
 public class DBImage {
 
     private ImageData imageData;
-    private Image image;
+    private String image;
 
-    public DBImage(ImageData metadata, Image image) {
+    public DBImage(ImageData imageData, String image) {
         this.imageData = imageData;
         this.image = image;
     }
 
-    public Image getImage() {
+    public String getImage() {
         return image;
     }
 
