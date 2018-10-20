@@ -19,11 +19,14 @@ public class Feed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
+        btnCallImage = findViewById(R.id.btnCallImage);
+        ivPostImage = findViewById(R.id.ivPostImage);
+
         btnCallImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //put the firebase getter here
-            }
+             @Override
+             public void onClick(View v) {
+                 //put the firebase getter here
+             }
         });
     }
 
