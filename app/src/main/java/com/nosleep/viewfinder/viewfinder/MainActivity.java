@@ -31,13 +31,9 @@ public class MainActivity extends Activity {
         FirebaseManager.getClosestImages(0, 0,4);
         setContentView(R.layout.activity_main);
 
-        Bitmap test = BitmapFactory.decodeResource(getResources(), R.drawable.night_sky_1);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        test.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-        String result =  Base64.encodeToString(baos.toByteArray(), Base64.URL_SAFE);
-        DBImage test1 = new DBImage(new ImageData(), result);
-        FirebaseManager.pushImage(test1);
-
+//        Bitmap test = BitmapFactory.decodeResource(getResources(), R.drawable.night_sky_1);
+//        String output = FirebaseManager.convertBitmapToString(test);
+//        FirebaseManager.pushToImageContent(output, "test");
 
     }
 

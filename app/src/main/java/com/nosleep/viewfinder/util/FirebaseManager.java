@@ -1,7 +1,9 @@
 package com.nosleep.viewfinder.util;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.util.Base64;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -11,7 +13,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nosleep.viewfinder.dbobject.ImageData;
 import com.nosleep.viewfinder.dbobject.DBImage;
+import com.nosleep.viewfinder.viewfinder.R;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +45,14 @@ public class FirebaseManager {
         //TODO: Check for null
         String pushId = pushToImageData(img.getImageData());
         pushToImageContent(img.getImage(), pushId);
+    }
+
+    public static String convertBitmapToString(Bitmap input) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        input.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        String result =  Base64.encodeToString(baos.toByteArray(), Base64.URL_SAFE);
+
+        return result;
     }
 
     public static List<Object> getClosestImages (final double latitude, final double longitude,
