@@ -12,7 +12,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseManager.pushToDB();
+//        FirebaseManager.pushImage(null);
         setContentView(R.layout.activity_main);
     }
 }
