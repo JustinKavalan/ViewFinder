@@ -9,6 +9,16 @@ import java.io.ByteArrayOutputStream;
 
 public class ImageProcessing {
 
+    public static byte[] convertBitmapToBytes(Bitmap image) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
+    public static Bitmap convertBytesToBitmap(byte[] input){
+        return BitmapFactory.decodeByteArray(input, 0, 100);
+    }
 
     public static String convertBitmapToString(Bitmap input) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -24,6 +34,8 @@ public class ImageProcessing {
 
         return result;
     }
+
+
 
     public static Bitmap convertStringToBitmap(String input) {
         byte[] decodedBytes = Base64.decode(input, Base64.URL_SAFE);

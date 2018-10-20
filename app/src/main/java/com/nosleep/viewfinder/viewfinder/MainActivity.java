@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
         Bitmap test = BitmapFactory.decodeResource(getResources(), R.drawable.night_sky_2);
         FirebaseManager.pushImage(new ImageData(), test);
 
+//        Bitmap test = BitmapFactory.decodeResource(getResources(), R.drawable.night_sky_2);
+//        DBImage output = new DBImage(new ImageData(), test);
+//        FirebaseManager.pushImage(output);
+
         btnCallImage = findViewById(R.id.btnCallImage);
     }
 

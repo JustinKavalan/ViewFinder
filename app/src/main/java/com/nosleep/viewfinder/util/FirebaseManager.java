@@ -1,16 +1,25 @@
 package com.nosleep.viewfinder.util;
 
 import android.graphics.Bitmap;
+import android.media.Image;
+import android.util.Log;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.nosleep.viewfinder.dbobject.ImageData;
 import com.nosleep.viewfinder.dbobject.DBImage;
 import com.nosleep.viewfinder.viewfinder.MainActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,8 +55,26 @@ public class FirebaseManager {
     }
 
     public static void uploadImageToCloud(Bitmap image, String directory) {
-        // Stub
+        FirebaseStorage filesystem = FirebaseStorage.getInstance();
+        StorageReference root = filesystem.getReference();
+        root.child(directory).putBytes(ImageProcessing.convertBitmapToBytes(image));
     }
+
+    public static void getBitmapFromCloud(final BitmapCallback callback, String directory){
+        FirebaseStorage filesystem = FirebaseStorage.getInstance();
+        StorageReference fileRef = filesystem.getReference().child(directory);
+        Task<byte[]> fileTask = fileRef.getBytes(1024*1024*10); //get ten megabyte max
+        fileTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap result = ImageProcessing.convertBytesToBitmap(bytes);
+
+                callback.callback(result);
+            }
+        });
+
+    }
+
 
     public static void getClosestImages(final CloseImageCallback callback, final double latitude,
                                         final double longitude, final int numOfImg,
