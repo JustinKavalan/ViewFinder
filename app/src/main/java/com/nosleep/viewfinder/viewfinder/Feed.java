@@ -1,6 +1,7 @@
 package com.nosleep.viewfinder.viewfinder;
 
 import android.app.Activity;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -8,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import java.util.List;
 
 public class Feed extends Activity {
 
@@ -25,7 +28,7 @@ public class Feed extends Activity {
         btnCallImage.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 //put the firebase getter here
+                 //put the firebase getter here to get closest image
              }
         });
     }
@@ -50,5 +53,10 @@ public class Feed extends Activity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    private List<Image>  getClosestImages(int numImages, double longitude, double latitude) {
+        //get closest data through metadata
+        return null;
     }
 }

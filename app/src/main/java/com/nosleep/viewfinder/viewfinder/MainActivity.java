@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.nosleep.viewfinder.dbobject.ImageData;
 import com.nosleep.viewfinder.util.FirebaseManager;
 
 public class MainActivity extends Activity {
@@ -19,7 +20,9 @@ public class MainActivity extends Activity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.vp_location_images);
         viewPager.setAdapter(new CustomPageAdapter(this));
 
-//        FirebaseManager.pushImage(null);
+        ImageData imd = new ImageData();
+        FirebaseManager.pushToImageContent(imd);
+        setContentView(R.layout.activity_main);
     }
 
     /** Called when user selects location from feed */
