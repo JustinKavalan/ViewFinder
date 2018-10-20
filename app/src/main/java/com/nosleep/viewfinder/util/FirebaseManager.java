@@ -16,6 +16,7 @@ import com.nosleep.viewfinder.dbobject.DBImage;
 import com.nosleep.viewfinder.viewfinder.R;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,13 +33,13 @@ public class FirebaseManager {
         return pushId;
     }
 
-    public static void pushToImageContent(String image, String pushId) {
+    public static void pushToImageContent(Bitmap image, String pushId) {
         //TODO: Check for null
+        String imgStr = ImageProcessing.convertBitmapToString(image);
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference content = db.getReference("Image");
         DatabaseReference childContent = content.child(pushId);
-        Log.d("STRINGSIZE", "" + image.length());
-        childContent.setValue(image);
+        childContent.setValue(imgStr);
     }
 
     public static void pushImage(DBImage img){
@@ -47,11 +48,31 @@ public class FirebaseManager {
         pushToImageContent(img.getImage(), pushId);
     }
 
+    private static Bitmap getImageByKey (final String key) {
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference content = db.getReference("Image").child(key);
+        final Bitmap[] image = new Bitmap[1];
+        content.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                image[0] = ImageProcessing.convertStringToBitmap(dataSnapshot.getValue(
+                        String.class));
+            }
 
-    public static List<Object> getClosestImages (final double latitude, final double longitude,
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return image[0];
+    }
+
+    public static List<DBImage> getClosestImages (final double latitude, final double longitude,
                                                  final int numOfImg) {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference content = db.getReference("Metadata");
+        final HashMap<String, ImageData> imgDataListWithKey = new HashMap<>();
+
         content.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -64,27 +85,16 @@ public class FirebaseManager {
                             imgLongitude);
                     if (list.size() < numOfImg) {
                         list.put(imgDataSnapshot.getKey(), distance);
+                        imgDataListWithKey.put(imgDataSnapshot.getKey(), imgData);
                     } else {
-                        double largestDistance = 0.0;
-                        String largestKeyValue = "";
-                        String entryKeyVal = "";
-                        double entryDistance = 0.0;
-                        for (Map.Entry<String, Double> entry : list.entrySet()) {
-                            if (distance < entry.getValue() && entry.getValue() > largestDistance) {
-                                largestDistance = entry.getValue();
-                                largestKeyValue = entry.getKey();
-                                entryKeyVal = entry.getKey();
-                                entryDistance = entry.getValue();
-                            }
-                        }
-                        if (!largestKeyValue.isEmpty()) {
+                        String largestKeyValue = findLargestValueInMap(list);
+                        if (distance < list.get(largestKeyValue)) {
                             list.remove(largestKeyValue);
-                            list.put(entryKeyVal, entryDistance);
+                            imgDataListWithKey.remove(largestKeyValue);
+                            list.put(imgDataSnapshot.getKey(), distance);
+                            imgDataListWithKey.put(imgDataSnapshot.getKey(), imgData);
                         }
                     }
-                }
-                for (Map.Entry<String, Double> e : list.entrySet()) {
-                    Log.d("KeyString", e.getKey());
                 }
             }
 
@@ -92,7 +102,35 @@ public class FirebaseManager {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+
+            private String findLargestValueInMap(HashMap<String, Double> map) {
+                double largestVal = 0.0;
+                String largestKey = "";
+                for (Map.Entry<String, Double> entry : map.entrySet()) {
+                    if (entry.getValue() >= largestVal) {
+                        largestVal = entry.getValue();
+                        largestKey = entry.getKey();
+                    }
+                }
+                return largestKey;
+            }
         });
-        return null;
+
+        List<ImageData> imgDataList = new ArrayList<>();
+        List<String> keyValues = new ArrayList<>();
+        List<Bitmap> images = new ArrayList<>();
+        List<DBImage> imageList = new ArrayList<>();
+        for (Map.Entry<String, ImageData> entry : imgDataListWithKey.entrySet()) {
+            imgDataList.add(entry.getValue());
+            keyValues.add(entry.getKey());
+        }
+        for (String key : keyValues) {
+            images.add(getImageByKey(key));
+        }
+        for (int i = 0; i < keyValues.size(); i++) {
+            DBImage dbi = new DBImage(imgDataList.get(i), images.get(i));
+            imageList.add(dbi);
+        }
+        return imageList;
     }
 }
