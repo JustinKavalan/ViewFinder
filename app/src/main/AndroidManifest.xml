@@ -16,13 +16,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Feed"
+        <activity
+            android:name=".Feed"
             android:exported="true"
-            android:label="View Finder" >
-        </activity>
+            android:label="View Finder"></activity>
         <activity
             android:name=".LocationDetails"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".Post"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:exported="true">
         </activity>
     </application>
 
