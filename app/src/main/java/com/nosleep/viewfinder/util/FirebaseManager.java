@@ -42,13 +42,13 @@ public class FirebaseManager {
         childContent.setValue(imgStr);
     }
 
-    public static void pushImage(DBImage img){
+    public static void pushImage(DBImage img) {
         //TODO: Check for null
         String pushId = pushToImageData(img.getImageData());
         pushToImageContent(img.getImage(), pushId);
     }
 
-    private static Bitmap getImageByKey (final String key) {
+    private static Bitmap getImageByKey(final String key) {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference content = db.getReference("Image").child(key);
         final Bitmap[] image = new Bitmap[1];
@@ -67,7 +67,7 @@ public class FirebaseManager {
         return image[0];
     }
 
-    public static List<DBImage> getClosestImages (final double latitude, final double longitude,
+    public static void getClosestImages(final FirebaseCallback callback, final double latitude, final double longitude,
                                                  final int numOfImg) {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference content = db.getReference("Metadata");
@@ -76,7 +76,8 @@ public class FirebaseManager {
         content.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                HashMap<String, Double> list = new HashMap<>();
+                Map<String, Double> list = new HashMap<>();
+
                 for (DataSnapshot imgDataSnapshot : dataSnapshot.getChildren()) {
                     ImageData imgData = imgDataSnapshot.getValue(ImageData.class);
                     double imgLatitude = imgData.getLatitude();
@@ -96,6 +97,24 @@ public class FirebaseManager {
                         }
                     }
                 }
+
+                List<ImageData> imgDataList = new ArrayList<>();
+                List<String> keyValues = new ArrayList<>();
+                List<Bitmap> images = new ArrayList<>();
+                List<DBImage> imageList = new ArrayList<>();
+                for (Map.Entry<String, ImageData> entry : imgDataListWithKey.entrySet()) {
+                    imgDataList.add(entry.getValue());
+                    keyValues.add(entry.getKey());
+                }
+                for (String key : keyValues) {
+                    images.add(getImageByKey(key));
+                }
+                for (int i = 0; i < keyValues.size(); i++) {
+                    DBImage dbi = new DBImage(imgDataList.get(i), images.get(i));
+                    imageList.add(dbi);
+                }
+
+                callback.callback(imageList);
             }
 
             @Override
@@ -103,7 +122,7 @@ public class FirebaseManager {
 
             }
 
-            private String findLargestValueInMap(HashMap<String, Double> map) {
+            private String findLargestValueInMap(Map<String, Double> map) {
                 double largestVal = 0.0;
                 String largestKey = "";
                 for (Map.Entry<String, Double> entry : map.entrySet()) {
@@ -115,22 +134,5 @@ public class FirebaseManager {
                 return largestKey;
             }
         });
-
-        List<ImageData> imgDataList = new ArrayList<>();
-        List<String> keyValues = new ArrayList<>();
-        List<Bitmap> images = new ArrayList<>();
-        List<DBImage> imageList = new ArrayList<>();
-        for (Map.Entry<String, ImageData> entry : imgDataListWithKey.entrySet()) {
-            imgDataList.add(entry.getValue());
-            keyValues.add(entry.getKey());
-        }
-        for (String key : keyValues) {
-            images.add(getImageByKey(key));
-        }
-        for (int i = 0; i < keyValues.size(); i++) {
-            DBImage dbi = new DBImage(imgDataList.get(i), images.get(i));
-            imageList.add(dbi);
-        }
-        return imageList;
     }
 }

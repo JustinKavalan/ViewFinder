@@ -27,11 +27,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("PLSWRK", ""+ FirebaseManager.getClosestImages(0, 0,4));
-
-//        Bitmap test = BitmapFactory.decodeResource(getResources(), R.drawable.night_sky_1);
-//        DBImage output = new DBImage(new ImageData(), test);
-//        FirebaseManager.pushImage(output);
+        Bitmap test = BitmapFactory.decodeResource(getResources(), R.drawable.night_sky_2);
+        DBImage output = new DBImage(new ImageData(), test);
+        FirebaseManager.pushImage(output);
 
         btnCallImage = findViewById(R.id.btnCallImage);
 

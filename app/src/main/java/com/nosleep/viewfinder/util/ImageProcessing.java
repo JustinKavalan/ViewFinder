@@ -26,7 +26,7 @@ public class ImageProcessing {
     }
 
     public static Bitmap convertStringToBitmap(String input) {
-        byte[] decodedBytes = Base64.decode(input, Base64.DEFAULT);
+        byte[] decodedBytes = Base64.decode(input, Base64.URL_SAFE);
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
     }
 
