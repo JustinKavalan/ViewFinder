@@ -1,8 +1,8 @@
 package com.nosleep.viewfinder.viewfinder;
 
 import android.content.Context;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.view.PagerAdapter;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.viewpager.widget.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
