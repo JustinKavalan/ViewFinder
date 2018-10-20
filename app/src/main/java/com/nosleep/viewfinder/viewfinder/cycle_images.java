@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link night_sky_1.OnFragmentInteractionListener} interface
+ * {@link cycle_images.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link night_sky_1#newInstance} factory method to
+ * Use the {@link cycle_images#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class night_sky_1 extends Fragment {
+public class cycle_images extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +29,7 @@ public class night_sky_1 extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public night_sky_1() {
+    public cycle_images() {
         // Required empty public constructor
     }
 
@@ -39,11 +39,11 @@ public class night_sky_1 extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment night_sky_1.
+     * @return A new instance of fragment cycle_images.
      */
     // TODO: Rename and change types and number of parameters
-    public static night_sky_1 newInstance(String param1, String param2) {
-        night_sky_1 fragment = new night_sky_1();
+    public static cycle_images newInstance(String param1, String param2) {
+        cycle_images fragment = new cycle_images();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +64,7 @@ public class night_sky_1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_night_sky_1, container, false);
+        return inflater.inflate(R.layout.fragment_cycle_images, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
