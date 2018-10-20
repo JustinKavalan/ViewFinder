@@ -1,6 +1,7 @@
 package com.nosleep.viewfinder.viewfinder;
 
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +11,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_location_details);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.vp_location_images);
+        viewPager.setAdapter(new CustomPageAdapter(this));
+
     }
 
     /** Called when user selects location from feed */
