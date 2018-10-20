@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.nosleep.viewfinder.util.FirebaseManager;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     Button btnCallImage;
     ImageView ivPostImage;
@@ -23,8 +23,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         btnCallImage = findViewById(R.id.btnCallImage);
-        ivPostImage = findViewById(R.id.ivPostImage);
 
 //        btnCallImage.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    /** Called when user selects location from feed */
+    /** Called when user selects location from feed*/
     public void getLocationDetails(View view) {
         Intent intent = new Intent(this, LocationDetails.class);
 
