@@ -33,7 +33,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Bitmap test = BitmapFactory.decodeResource(getResources(), R.drawable.night_sky_1);
+        Log.d("PLSWRK", ""+ FirebaseManager.getClosestImages(0, 0,4));
+
+//       Bitmap test = BitmapFactory.decodeResource(getResources(), R.drawable.night_sky_1);
 //        String output = FirebaseManager.convertBitmapToString(test);
 //        FirebaseManager.pushToImageContent(output, "test");
 
