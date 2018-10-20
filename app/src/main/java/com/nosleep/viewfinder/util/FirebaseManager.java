@@ -47,13 +47,6 @@ public class FirebaseManager {
         pushToImageContent(img.getImage(), pushId);
     }
 
-    public static String convertBitmapToString(Bitmap input) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        input.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        String result =  Base64.encodeToString(baos.toByteArray(), Base64.URL_SAFE);
-
-        return result;
-    }
 
     public static List<Object> getClosestImages (final double latitude, final double longitude,
                                                  final int numOfImg) {
