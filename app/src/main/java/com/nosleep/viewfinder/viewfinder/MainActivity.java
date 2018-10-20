@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnCallImage;
     ImageView ivPostImage;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,25 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
 //        FirebaseManager.pushImage(null);
+    }
+
+    /** Calls phone camera to take picture */
+    //Call this method after plus sign is added to menu bar
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ImageView img = (ImageView) findViewById(R.id.ivPostPreview);
+            img.setImageBitmap(imageBitmap);
+        }
     }
 
 }
