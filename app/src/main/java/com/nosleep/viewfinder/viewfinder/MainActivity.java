@@ -3,6 +3,8 @@ package com.nosleep.viewfinder.viewfinder;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,6 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.nosleep.viewfinder.dbobject.DBImage;
+import com.nosleep.viewfinder.dbobject.ImageData;
 import com.nosleep.viewfinder.util.FirebaseManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("PLSWRK", ""+ FirebaseManager.getClosestImages(0, 0,4));
 
-//       Bitmap test = BitmapFactory.decodeResource(getResources(), R.drawable.night_sky_1);
-//        String output = FirebaseManager.convertBitmapToString(test);
-//        FirebaseManager.pushToImageContent(output, "test");
+//        Bitmap test = BitmapFactory.decodeResource(getResources(), R.drawable.night_sky_1);
+//        DBImage output = new DBImage(new ImageData(), test);
+//        FirebaseManager.pushImage(output);
 
         btnCallImage = findViewById(R.id.btnCallImage);
 
