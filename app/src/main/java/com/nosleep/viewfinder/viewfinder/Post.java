@@ -34,7 +34,7 @@ public class Post extends AppCompatActivity {
         ImageView img = (ImageView) findViewById(R.id.ivPostPreview);
         img.setImageBitmap(bmp);
 
-        btnClose = findViewById(R.id.btnClose);
+        //btnClose = findViewById(R.id.btnClose);
         btnPost = findViewById(R.id.btnPost);
         //ivPostPreview = findViewById(R.id.ivPostPreview);
         etCaption = findViewById(R.id.etCaption);
