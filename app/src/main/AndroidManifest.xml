@@ -16,10 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LocationDetails" />
         <activity android:name=".Feed"
             android:exported="true"
             android:label="View Finder" >
+        </activity>
+        <activity
+            android:name=".LocationDetails"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 
