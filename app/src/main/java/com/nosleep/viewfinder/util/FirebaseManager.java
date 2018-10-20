@@ -20,10 +20,6 @@ public class FirebaseManager {
         sampleContent.setValue(data);
     }
 
-    /**
-     * @param image the image to push
-     * @param hash the hash of the image
-     */
     private static void pushToImage (Image image, int hash) {
         //TODO: Check for null
         String hashString = Integer.toString(hash);
