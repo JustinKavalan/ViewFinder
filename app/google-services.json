@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "422068563605",
+    "firebase_url": "https://viewfinder-68e3f.firebaseio.com",
+    "project_id": "viewfinder-68e3f",
+    "storage_bucket": "viewfinder-68e3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:422068563605:android:19274a27cd4aa62f",
+        "android_client_info": {
+          "package_name": "com.nosleep.viewfinder.viewfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "422068563605-nthacqdgk4kt804c3molf2a4an94gb16.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nosleep.viewfinder.viewfinder",
+            "certificate_hash": "34d04c0f5ad2d323bab6a14792f8e090fd6f2d75"
+          }
+        },
+        {
+          "client_id": "422068563605-5mb92vmpdkvm6aqjb75ol03mn8gf9fpl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7giY-ARIZ5xUrADt07qsqBqtAyNEAp4Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "422068563605-5mb92vmpdkvm6aqjb75ol03mn8gf9fpl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
