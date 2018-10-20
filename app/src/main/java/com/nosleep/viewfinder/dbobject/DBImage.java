@@ -5,25 +5,21 @@ import android.media.Image;
 import java.util.Objects;
 
 public class DBImage {
-    private ImageData metadata;
+
+    private ImageData imageData;
     private Image image;
-    private int hash;
 
     public DBImage(ImageData metadata, Image image) {
-        this.metadata = metadata;
+        this.imageData = imageData;
         this.image = image;
-        this.hash = Objects.hash(image);
     }
 
     public Image getImage() {
         return image;
     }
 
-    public ImageData getMetadata() {
-        return metadata;
+    public ImageData getImageData() {
+        return imageData;
     }
 
-    public int getHash() {
-        return hash;
-    }
 }
