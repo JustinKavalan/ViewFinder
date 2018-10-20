@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.nosleep.viewfinder.util.FirebaseManager;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -100,11 +102,15 @@ public class MainActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             System.out.println(imageBitmap);
 
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            //Convert to byte array
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
 
-            ImageView img = (ImageView) findViewById(R.id.imageView2);
-            img.setImageBitmap(imageBitmap);
+            //Pass data within activity using intent
+            Intent intent = new Intent(this, Post.class);
+            intent.putExtra("image", byteArray);
+            startActivity(intent);
         }
     }
 

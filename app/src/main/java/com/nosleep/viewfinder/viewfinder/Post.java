@@ -1,6 +1,9 @@
 package com.nosleep.viewfinder.viewfinder;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,9 +28,15 @@ public class Post extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
+        byte[] byteArray = getIntent().getByteArrayExtra("image");
+        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
+        ImageView img = (ImageView) findViewById(R.id.ivPostPreview);
+        img.setImageBitmap(bmp);
+
         btnClose = findViewById(R.id.btnClose);
         btnPost = findViewById(R.id.btnPost);
-        ivPostPreview = findViewById(R.id.ivPostPreview);
+        //ivPostPreview = findViewById(R.id.ivPostPreview);
         etCaption = findViewById(R.id.etCaption);
         rbRating = findViewById(R.id.rbRating);
 
