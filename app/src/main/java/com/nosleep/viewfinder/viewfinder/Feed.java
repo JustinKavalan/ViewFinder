@@ -1,6 +1,6 @@
 package com.nosleep.viewfinder.viewfinder;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class Feed extends AppCompatActivity {
+public class Feed extends Activity {
 
     Button btnCallImage;
     ImageView ivPostImage;
