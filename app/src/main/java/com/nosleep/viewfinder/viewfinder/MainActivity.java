@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.nosleep.viewfinder.dbobject.ImageData;
 import com.nosleep.viewfinder.util.FirebaseManager;
 
@@ -15,6 +16,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         ImageData imd = new ImageData();
         FirebaseManager.pushToImageContent(imd);
+        FirebaseManager.getClosestImages(0, 0,4);
         setContentView(R.layout.activity_main);
     }
 
