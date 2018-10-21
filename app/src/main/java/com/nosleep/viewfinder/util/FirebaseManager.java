@@ -29,7 +29,7 @@ import androidx.annotation.NonNull;
 
 public class FirebaseManager {
 
-    public static String pushToImageData(ImageData data) {
+    private static String pushToImageData(ImageData data) {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference content = db.getReference("Metadata");
         String pushId = content.push().getKey();
@@ -37,7 +37,7 @@ public class FirebaseManager {
         return pushId;
     }
 
-    public static void pushToImageUrlStore(String imageUrl, String pushId) {
+    private static void pushToImageUrlStore(String imageUrl, String pushId) {
         //TODO: Check for null
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference content = db.getReference("Image");
@@ -48,14 +48,13 @@ public class FirebaseManager {
     public static void pushImage(ImageData imgData, Bitmap image) {
         //TODO: Check for null
         String pushId = pushToImageData(imgData);
-        //TODO: IMPORTANT CHANGE URL TO REAL ONE
         String uri = "/Images/" + pushId;
         String url = "https://storage.googleapis.com/viewfinder-68e3f.appspot.com/Images/" + pushId;
         pushToImageUrlStore(url, pushId);
         uploadImageToCloud(image, uri);
     }
 
-    public static void uploadImageToCloud(Bitmap image, String directory) {
+    private static void uploadImageToCloud(Bitmap image, String directory) {
         FirebaseStorage filesystem = FirebaseStorage.getInstance();
         StorageReference root = filesystem.getReference();
         root.child(directory).putBytes(ImageProcessing.convertBitmapToBytes(image));
