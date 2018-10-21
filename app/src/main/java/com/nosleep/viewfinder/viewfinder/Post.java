@@ -23,6 +23,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
+import com.nosleep.viewfinder.dbobject.ImageData;
+
 public class Post extends AppCompatActivity {
 
     double longitude, latitude;
@@ -66,9 +68,11 @@ public class Post extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 caption = etCaption.getText().toString();
-                //Where the post is sent to firebase
+                ImageData imgData = new ImageData();
+                imgData.setCaption(caption);
             }
         });
+
     }
 
     void getLocation() {

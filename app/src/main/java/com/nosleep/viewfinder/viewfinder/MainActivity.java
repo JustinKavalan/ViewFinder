@@ -4,7 +4,10 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -14,11 +17,20 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import java.io.ByteArrayOutputStream;
+import com.nosleep.viewfinder.dbobject.DBImage;
+import com.nosleep.viewfinder.dbobject.ImageData;
+import com.nosleep.viewfinder.util.FirebaseManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,13 +38,35 @@ public class MainActivity extends AppCompatActivity {
     double longitude, latitude;
     static final int REQUEST_LOCATION = 1;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     LocationManager locationManager;
+
+    public static List<String> ITEM_ID_ON_PAGE = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        Bitmap test = BitmapFactory.decodeResource(getResources(), R.drawable.night_sky_2);
+//        FirebaseManager.pushImage(new ImageData(), test);
+
+
+        // Create Recycler view
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+
+
+        mAdapter = new RecyclerViewAdapter(new Bitmap[5]);
+        mRecyclerView.setAdapter(mAdapter);
+
+
+        // Location stuff
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         getLocation();
 
@@ -80,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
     /** Called when user selects location from feed*/
     public void getLocationDetails(View view) {
         Intent intent = new Intent(this, LocationDetails.class);
-        setContentView(R.layout.activity_location_details);
         startActivity(intent);
     }
 
