@@ -30,6 +30,9 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button btnCallImage;
+    Button btnActionPost;
+    ImageView ivPostImage;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
@@ -37,12 +40,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        btnCallImage = findViewById(R.id.btnCallImage);
+
 //        btnCallImage.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                //put the firebase getter here
 //            }
 //        });
+
     }
 
     @Override
