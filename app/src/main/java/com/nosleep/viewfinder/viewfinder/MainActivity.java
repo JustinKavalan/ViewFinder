@@ -1,50 +1,45 @@
 package com.nosleep.viewfinder.viewfinder;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.nosleep.viewfinder.util.FirebaseManager;
-
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     Button btnCallImage;
-    Button btnActionPost;
-    ImageView ivPostImage;
+    double longitude, latitude;
+    static final int REQUEST_LOCATION = 1;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Create Recycler view
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         mLayoutManager = new LinearLayoutManager(this);
@@ -55,6 +50,33 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new RecyclerViewAdapter(new Bitmap[5]);
         mRecyclerView.setAdapter(mAdapter);
 
+
+        // Location stuff
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        getLocation();
+
+        btnCallImage = findViewById(R.id.btnCallImage);
+    }
+
+    void getLocation() {
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+        } else {
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            if (location != null){
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                System.out.println("Latitude: " + latitude + " | Longitude: " + longitude);
+            } else {
+                System.out.println("unable to find current location");
+            }
+        }
     }
 
     @Override
@@ -69,24 +91,16 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_post:
                 dispatchTakePictureIntent();
                 return true;
-
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
     /** Called when user selects location from feed*/
     public void getLocationDetails(View view) {
         Intent intent = new Intent(this, LocationDetails.class);
-        
         startActivity(intent);
-
-//        FirebaseManager.pushImage(null);
     }
-
 
     /** Calls phone camera to take picture */
     private void dispatchTakePictureIntent() {
