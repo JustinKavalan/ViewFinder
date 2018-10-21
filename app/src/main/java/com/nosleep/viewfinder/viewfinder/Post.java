@@ -13,7 +13,6 @@ import android.widget.RatingBar;
 
 public class Post extends AppCompatActivity {
 
-    Button btnClose;
     Button btnPost;
     ImageView ivPostPreview;
     EditText etCaption;
@@ -34,9 +33,8 @@ public class Post extends AppCompatActivity {
         ImageView img = (ImageView) findViewById(R.id.ivPostPreview);
         img.setImageBitmap(bmp);
 
-        //btnClose = findViewById(R.id.btnClose);
         btnPost = findViewById(R.id.btnPost);
-        //ivPostPreview = findViewById(R.id.ivPostPreview);
+        ivPostPreview = findViewById(R.id.ivPostPreview);
         etCaption = findViewById(R.id.etCaption);
         rbRating = findViewById(R.id.rbRating);
 
