@@ -1,14 +1,17 @@
 package com.nosleep.viewfinder.viewfinder;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
-import androidx.core.content.FileProvider;
-import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -16,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -31,14 +35,17 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     Button btnCallImage;
-    Button btnActionPost;
-    ImageView ivPostImage;
+    static final int REQUEST_LOCATION = 1;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        getLocation();
 
         btnCallImage = findViewById(R.id.btnCallImage);
 
@@ -49,6 +56,29 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+    }
+
+    void getLocation() {
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+        } else {
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            if (location != null){
+                double latti = location.getLatitude();
+                double longi = location.getLongitude();
+
+
+                System.out.println("Latitude: " + latti + " | Longitude: " + longi);
+            } else {
+                System.out.println("unable to find current location");
+            }
+        }
     }
 
     @Override
