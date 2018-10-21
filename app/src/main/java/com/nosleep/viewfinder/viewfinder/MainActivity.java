@@ -17,11 +17,20 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import java.io.ByteArrayOutputStream;
+import com.nosleep.viewfinder.dbobject.DBImage;
+import com.nosleep.viewfinder.dbobject.ImageData;
+import com.nosleep.viewfinder.util.FirebaseManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,10 +43,16 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     LocationManager locationManager;
 
+    public static List<String> ITEM_ID_ON_PAGE = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        Bitmap test = BitmapFactory.decodeResource(getResources(), R.drawable.night_sky_2);
+//        FirebaseManager.pushImage(new ImageData(), test);
+
 
         // Create Recycler view
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
