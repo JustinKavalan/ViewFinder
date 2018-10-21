@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 
 import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,20 +36,24 @@ public class MainActivity extends AppCompatActivity {
     Button btnActionPost;
     ImageView ivPostImage;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnCallImage = findViewById(R.id.btnCallImage);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-//        btnCallImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //put the firebase getter here
-//            }
-//        });
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+
+
+        mAdapter = new RecyclerViewAdapter(new Bitmap[5]);
+        mRecyclerView.setAdapter(mAdapter);
 
     }
 
@@ -75,9 +81,7 @@ public class MainActivity extends AppCompatActivity {
     /** Called when user selects location from feed*/
     public void getLocationDetails(View view) {
         Intent intent = new Intent(this, LocationDetails.class);
-
-        setContentView(R.layout.activity_location_details);
-
+        
         startActivity(intent);
 
 //        FirebaseManager.pushImage(null);
