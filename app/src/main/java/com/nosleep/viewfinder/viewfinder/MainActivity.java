@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.graphics.BitmapFactory;
@@ -27,8 +28,11 @@ import android.widget.Button;
 import java.io.ByteArrayOutputStream;
 import com.nosleep.viewfinder.dbobject.DBImage;
 import com.nosleep.viewfinder.dbobject.ImageData;
+import com.nosleep.viewfinder.util.CloseImageCallback;
 import com.nosleep.viewfinder.util.FirebaseManager;
+import com.squareup.picasso.Picasso;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     static final int REQUEST_LOCATION = 1;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    final RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(new Bitmap[0]);
     private RecyclerView.LayoutManager mLayoutManager;
     LocationManager locationManager;
 
@@ -52,7 +56,46 @@ public class MainActivity extends AppCompatActivity {
 
 //        Bitmap test = BitmapFactory.decodeResource(getResources(), R.drawable.night_sky_2);
 //        FirebaseManager.pushImage(new ImageData(), test);
+        int size = 10;
 
+        final Bitmap[] images = new Bitmap[size];
+
+        CloseImageCallback callback = new CloseImageCallback() {
+
+            @Override
+            public void callback(final List<DBImage> result) {
+
+                new AsyncTask<URL,Integer, Integer>(){
+                    @Override
+                    protected Integer doInBackground(URL... urls) {
+
+                        for (int i = 0; i < result.size(); i++) {
+                            String url = result.get(i).getImageUrl();
+                            try {
+                                images[i] = Picasso.get().load(url).get();
+                            } catch(Exception e) {
+                                Log.e("Error", "Failed to get https resource: ", e);
+                                return 1;
+                            }
+                        }
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mAdapter.setmDataset(images);
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
+
+                        return 0;
+
+                    }
+                }.execute();
+                //not sure how to fix this but you'll need to restructure
+
+            }
+        };
+        FirebaseManager.getClosestImages(callback,0.0,0.0,size, true);
 
         // Create Recycler view
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -61,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-
-        mAdapter = new RecyclerViewAdapter(new Bitmap[5]);
         mRecyclerView.setAdapter(mAdapter);
 
 
