@@ -1,10 +1,22 @@
 package com.nosleep.viewfinder.viewfinder;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationManager;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,12 +27,14 @@ import com.nosleep.viewfinder.dbobject.ImageData;
 
 public class Post extends AppCompatActivity {
 
+    double longitude, latitude;
+    static final int REQUEST_LOCATION = 1;
+    LocationManager locationManager;
+
     Button btnPost;
     ImageView ivPostPreview;
     EditText etCaption;
     RatingBar rbRating;
-    double longitude;
-    double latitude;
     double star = 5.0;
     String caption = "";
 
@@ -34,6 +48,9 @@ public class Post extends AppCompatActivity {
 
         ImageView img = (ImageView) findViewById(R.id.ivPostPreview);
         img.setImageBitmap(bmp);
+
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        getLocation();
 
         btnPost = findViewById(R.id.btnPost);
         ivPostPreview = findViewById(R.id.ivPostPreview);
@@ -56,5 +73,26 @@ public class Post extends AppCompatActivity {
             }
         });
 
+    }
+
+    void getLocation() {
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+        } else {
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            if (location != null){
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                System.out.println("Latitude: " + latitude + " | Longitude: " + longitude);
+            } else {
+                System.out.println("unable to find current location");
+            }
+        }
     }
 }
