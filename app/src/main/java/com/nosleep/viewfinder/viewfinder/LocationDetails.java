@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -17,7 +18,10 @@ import com.nosleep.viewfinder.dbobject.DBImage;
 import com.nosleep.viewfinder.util.BitmapCallback;
 import com.nosleep.viewfinder.util.CloseImageCallback;
 import com.nosleep.viewfinder.util.FirebaseManager;
+import com.squareup.picasso.Picasso;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,23 +34,44 @@ public class LocationDetails extends Activity {
 
         final ViewPager mViewPager = findViewById(R.id.vp_location_images);
 
+        final CustomPageAdapter mViewAdapter = new CustomPageAdapter(LocationDetails.this);
+        mViewPager.setAdapter(mViewAdapter);
+
+
         CloseImageCallback callback = new CloseImageCallback() {
             ViewPager viewPager = mViewPager;
 
             @Override
-            public void callback(List<DBImage> result) {
-                final Bitmap[] images = new Bitmap[result.size()];
-                for (int i = 0; i < result.size(); i++) {
-                    FirebaseManager.getBitmapFromCloud(new BitmapCallback() {
-                        @Override
-                        public void callback(Bitmap result) {
-//                            images[i] =
-                        }
-                    }, result.get(i).getImageUrl());
-                }
+            public void callback(final List<DBImage> result) {
 
+                new AsyncTask<URL,Integer, Integer>(){
+                    @Override
+                    protected Integer doInBackground(URL... urls) {
+
+                        final Bitmap[] images = new Bitmap[result.size()];
+                        for (int i = 0; i < result.size(); i++) {
+                            String url = result.get(i).getImageUrl();
+                            try {
+                                images[i] = Picasso.get().load(url).get();
+                            } catch(Exception e) {
+                                Log.e("Error", "Failed to get https resource: ", e);
+                                return 1;
+                            }
+                        }
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mViewAdapter.setImages(images);
+                                mViewAdapter.notifyDataSetChanged();
+                            }
+                        });
+
+                        return 0;
+
+                    }
+                }.execute();
                 //not sure how to fix this but you'll need to restructure
-                viewPager.setAdapter(new CustomPageAdapter(LocationDetails.this, images));
 
             }
         };

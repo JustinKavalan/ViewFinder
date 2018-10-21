@@ -49,30 +49,16 @@ public class FirebaseManager {
         //TODO: Check for null
         String pushId = pushToImageData(imgData);
         //TODO: IMPORTANT CHANGE URL TO REAL ONE
-        String url = "/Images/" + pushId;
+        String uri = "/Images/" + pushId;
+        String url = "https://storage.googleapis.com/viewfinder-68e3f.appspot.com/Images/" + pushId;
         pushToImageUrlStore(url, pushId);
-        uploadImageToCloud(image, url);
+        uploadImageToCloud(image, uri);
     }
 
     public static void uploadImageToCloud(Bitmap image, String directory) {
         FirebaseStorage filesystem = FirebaseStorage.getInstance();
         StorageReference root = filesystem.getReference();
         root.child(directory).putBytes(ImageProcessing.convertBitmapToBytes(image));
-    }
-
-    public static void getBitmapFromCloud(final BitmapCallback callback, String directory){
-        FirebaseStorage filesystem = FirebaseStorage.getInstance();
-        StorageReference fileRef = filesystem.getReference().child(directory);
-        Task<byte[]> fileTask = fileRef.getBytes(1024*1024*10); //get ten megabyte max
-        fileTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap result = ImageProcessing.convertBytesToBitmap(bytes);
-
-                callback.callback(result);
-            }
-        });
-
     }
 
 

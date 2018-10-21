@@ -17,11 +17,14 @@ public class CustomPageAdapter extends PagerAdapter {
     //Make firebase pass images into drawable and add references to this array
 
     //array of all of the images
-    private Bitmap[] images;
+    private Bitmap[] images = new Bitmap[0];
 
-    public CustomPageAdapter(Context context, Bitmap[] images) {
-        mContext = context;
+    public void setImages(Bitmap[] images) {
         this.images = images;
+    }
+
+    public CustomPageAdapter(Context context) {
+        mContext = context;
     }
 
     @Override
@@ -39,6 +42,17 @@ public class CustomPageAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup collection, int position, Object view) {
         collection.removeView((View) view);
+    }
+
+    @Override
+    public int getItemPosition(Object o){
+        for (int i = 0; i < images.length; i++){
+            if (this.equals(o)) {
+                return i;
+            }
+        }
+
+        return POSITION_NONE;
     }
 
     @Override
