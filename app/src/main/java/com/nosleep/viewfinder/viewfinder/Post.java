@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -23,9 +25,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
+import com.nosleep.viewfinder.dbobject.DBImage;
 import com.nosleep.viewfinder.dbobject.ImageData;
+import com.nosleep.viewfinder.util.FirebaseManager;
 
-public class Post extends AppCompatActivity {
+public class Post extends Activity {
 
     double longitude, latitude;
     static final int REQUEST_LOCATION = 1;
@@ -44,9 +48,9 @@ public class Post extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         byte[] byteArray = getIntent().getByteArrayExtra("image");
-        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        final Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
-        ImageView img = (ImageView) findViewById(R.id.ivPostPreview);
+        ImageView img = findViewById(R.id.ivPostPreview);
         img.setImageBitmap(bmp);
 
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
@@ -70,6 +74,13 @@ public class Post extends AppCompatActivity {
                 caption = etCaption.getText().toString();
                 ImageData imgData = new ImageData();
                 imgData.setCaption(caption);
+                imgData.setLatitude(latitude);
+                imgData.setLongitude(longitude);
+                imgData.setRating(star);
+                FirebaseManager.pushImage(imgData, bmp);
+
+                Intent intent = new Intent(Post.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
