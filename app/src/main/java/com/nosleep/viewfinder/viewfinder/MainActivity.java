@@ -13,28 +13,17 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.nosleep.viewfinder.util.FirebaseManager;
-
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     Button btnCallImage;
+    double longitude, latitude;
     static final int REQUEST_LOCATION = 1;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     LocationManager locationManager;
@@ -48,14 +37,6 @@ public class MainActivity extends AppCompatActivity {
         getLocation();
 
         btnCallImage = findViewById(R.id.btnCallImage);
-
-//        btnCallImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //put the firebase getter here
-//            }
-//        });
-
     }
 
     void getLocation() {
@@ -70,11 +51,9 @@ public class MainActivity extends AppCompatActivity {
             Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
             if (location != null){
-                double latti = location.getLatitude();
-                double longi = location.getLongitude();
-
-
-                System.out.println("Latitude: " + latti + " | Longitude: " + longi);
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                System.out.println("Latitude: " + latitude + " | Longitude: " + longitude);
             } else {
                 System.out.println("unable to find current location");
             }
@@ -93,26 +72,17 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_post:
                 dispatchTakePictureIntent();
                 return true;
-
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
     /** Called when user selects location from feed*/
     public void getLocationDetails(View view) {
         Intent intent = new Intent(this, LocationDetails.class);
-
         setContentView(R.layout.activity_location_details);
-
         startActivity(intent);
-
-//        FirebaseManager.pushImage(null);
     }
-
 
     /** Calls phone camera to take picture */
     private void dispatchTakePictureIntent() {
